@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ion WebGL-2-Blender viewport</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link href="css/ion2_1.css" rel="stylesheet"/>
+    <link href="css/tabs.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+<script src="js/r137/three.js"></script>
+<script src="js/r137/webxr/VRButton.js"></script>
+
+<script src="js/r137/loaders/GLTFLoader.js"></script>
+<script src="js/r137/loaders/DRACOLoader.js"></script>
+
+<script src="jsm/ion_lib_h106a.js"></script>
+<!--<script src="jsm/ion_viewer.js"></script>-->
+
+
+<!--<script src="jsm/h106a.js"></script>-->
+<script src="jsm/viewer_hq.js"></script>
+
+<!-- <script src="js/r106/Water.js"></script> -->
+<!-- <script src="js/r106/Sky.js"></script> -->
+<!-- <script src="js/r106/WebGL.js"></script> -->
+<!-- <script src="js/r106/LightProbeGenerator.js"></script> -->
+
+<!-- <script src="js/ion/preloader.js"></script> -->
+
+<script src="jsm/libs/jquery-1.9.1.min.js"></script>
+<script src="jsm/libs/tabs.js"></script>
+
+<div id="container">
+        <!--Horizontal Tab-->
+        <div id="parentHorizontalTab">
+            <ul class="resp-tabs-list hor_1">
+                <li>OBJ</li>
+                <li>Geo</li>
+                <li>Lght</li>
+                <li>Cam</li>
+                <li>X</li>
+            </ul>
+            <div class="resp-tabs-container hor_1">
+                <div>
+					<div id="mat-switcher">
+                        <h4>Calibration Helpers</h4>
+                        <div><label for="slider-mg_pos_x">Position X ( <span id="mg_pos_x-value"></span> )</label>
+                            <input id="slider-mg_pos_x" type="range" class="slider" min="-30" max="30" step="1">
+                        </div>
+                        <div><label for="slider-mg_pos_y">Position Z ( <span id="mg_pos_y-value"></span> )</label>
+                            <input id="slider-mg_pos_y" type="range" class="slider" min="-30" max="30" step="1">
+                        </div>
+                        <div><label for="slider-mg_rot_y">Rotation ( <span id="mg_rot_y-value"></span> )</label>
+                            <input id="slider-mg_rot_y" type="range" class="slider" min="-180" max="180" step="1">
+                        </div>
+                        <h4>Directional</h4>
+                        <div><label for="slider-lg_pos_x">Rotation X ( <span id="lg_pos_x-value"></span> )</label>
+                            <input id="slider-lg_pos_x" type="range" class="slider" min="-1.57" max="1.57" step="0.01">
+                        </div>
+                        <div><label for="slider-lg_pos_y">Rotation Y (not needed) ( <span id="lg_pos_y-value"></span> )</label>
+                            <input id="slider-lg_pos_y" type="range" class="slider" min="-1.57" max="1.57" step="0.01">
+                        </div>
+                        <div><label for="slider-lg_pos_z">Rotation Z ( <span id="lg_pos_z-value"></span> )</label>
+                            <input id="slider-lg_pos_z" type="range" class="slider" min="-1.57" max="1.57" step="0.01">
+                        </div>
+                        <div><label for="slider-lg_int">Light Intensity ( <span id="lg_int-value"></span> )</label>
+                            <input id="slider-lg_int" type="range" class="slider" min="0" max="10" step="1">
+                        </div>
+                        <h4>Hemispherical</h4>
+                        <div><label for="slider-hemi_int">Light Intensity ( <span id="hemi_int-value"></span> )</label>
+                            <input id="slider-hemi_int" type="range" class="slider" min="0" max="10" step="1">
+                        </div>
+                        <div><label for="slider-hemi_temp">Light Temperature ( <span id="hemi_temp-value"></span> )</label>
+                            <input id="slider-hemi_temp" type="range" class="slider" min="-30" max="30" step="1">
+                        </div>
+                        <h4>LightProbe</h4>
+                        <div><label for="slider-lprobe_int">Light Intensity ( <span id="lprobe_int-value"></span> )</label>
+                            <input id="slider-lprobe_int" type="range" class="slider" min="0" max="20" step="0.1">
+                        </div>
+					</div>
+                </div>
+                <div>
+					<div id="mat-switcher">
+                        
+					</div>
+				</div>
+                <div>
+                    <div id="mat-switcher"></div>
+                        
+				</div>
+				
+				
+                <div>
+                    <div id="mat-switcher"></div>
+                    
+				</div>
+				
+            </div>
+        </div>
+    </div>
+    
+    
+<div id="my_webgl"></div>
+<div id="webglUI"></div>
+
+<div id="progress">
+	<span id="message"></span>
+	<center>
+		<div id="progressbar" class="shadow"><div id="bar" class="shadow"></div></div>
+	</center>
+</div>
+
+<script>
+    var progressOptions = {
+        wrapper: $g('progress'),
+        bar: $g('bar'),
+        background: 'css/loader.gif',
+        message: false,
+		url: ''
+    };
+
+    var preloader = new THREE.Preloader( $g('my_webgl'), progressOptions );
+    preloader.start();
+
+    requestAnimationFrame( function (){
+
+        window.ion = new IonVR({
+                // environmental paths
+                scene: '_lgl1/_lgl1.js', // sceneGraph json
+                gltf_scene: 'http://127.0.0.1:7778/webgl-2-blender_testbench/_lgl1/_3d/scene.glb', // sceneGraph glft
+                container: $g('my_webgl'), // webgl container
+                
+                // renderer parameters
+                lightprobe : true,
+				lightprobe_tx : null,
+				lightprobe_comp : false,
+				lightprobe_set : 'city1',
+				lightprobeInt : 0.0,
+				
+				exposure : 1.0,
+				always_render: true,
+                env_bg: {
+                    projection: null,
+                    env_tx: null
+                },
+				postprocessing: false,
+                preloader: preloader
+            });
+
+            ion.onReady = function() {
+//                if(ion.options.lock_mobile_landscape){
+//                    document.getElementById("landscape" ).click();
+//                }
+
+            }
+    }, 1000);
+
+
+
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        //Horizontal Tab
+        $('#parentHorizontalTab').easyResponsiveTabs({
+            type: 'default', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true, // 100% fit in a container
+            tabidentify: 'hor_1', // The tab groups identifier
+			activetab_bg: '#444', // background color for active tabs in this group
+            inactive_bg: '#333', // background color for inactive tabs in this group
+            active_border_color: '#666', // border color for active tabs heads in this group
+            active_content_border_color: '#888', // border color for active tabs contect in this group so that it matches the tab head border
+            activate: function(event) { // Callback function if tab is switched
+                var $tab = $(this);
+                var $info = $('#nested-tabInfo');
+                var $name = $('span', $info);
+                $name.text($tab.text());
+                $info.show();
+            }
+        });
+
+        // Child Tab
+        $('#ChildVerticalTab_1').easyResponsiveTabs({
+            type: 'vertical',
+            width: 'auto',
+            fit: true,
+            tabidentify: 'ver_1', // The tab groups identifier
+            activetab_bg: '#444', // background color for active tabs in this group
+            inactive_bg: '#333', // background color for inactive tabs in this group
+            active_border_color: '#666', // border color for active tabs heads in this group
+            active_content_border_color: '#888' // border color for active tabs contect in this group so that it matches the tab head border
+        });
+
+        //Vertical Tab
+        $('#parentVerticalTab').easyResponsiveTabs({
+            type: 'vertical', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true, // 100% fit in a container
+            closed: 'accordion', // Start closed if in accordion view
+            tabidentify: 'hor_1', // The tab groups identifier
+            activate: function(event) { // Callback function if tab is switched
+                var $tab = $(this);
+                var $info = $('#nested-tabInfo2');
+                var $name = $('span', $info);
+                $name.text($tab.text());
+                $info.show();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

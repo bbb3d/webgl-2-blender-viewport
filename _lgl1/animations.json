@@ -1,0 +1,9 @@
+{
+  "animations": {
+    "View_Front3" : {
+      "path": "cam16.json",
+      "scale": 1
+    }
+
+  }
+}

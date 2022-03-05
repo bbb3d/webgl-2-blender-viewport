@@ -1,0 +1,92 @@
+ 
+ 
+                #multicontrolbuttons {
+                position: absolute;
+                bottom: 0px;
+                right: 0px;
+                text-align: center;
+                font-family: 'Karla', sans-serif;
+				width: 100px;
+				background-color: rgba(0,0,0,0.5);
+                }
+
+				.multibclass {
+				position: relative;
+				float: left;
+				width: 100%;
+				}
+				
+				.webvr-ui-button {
+					bottom: 0 !important;
+				}
+				
+                a#magic-window {
+                display: block;
+                color: white;
+                /*margin-top: 1em;*/
+                }
+                
+                #exitvr {
+                display: none;
+                bottom: 10px;
+                /*left: 50%;
+                transform: translate(-50%, -50%);*/
+                background-color: white;
+                opacity: 0.5;
+                text-align: center;
+                font-family: 'Karla', sans-serif;
+                }
+
+                a#magic-window-exit {
+                display: block;
+                color: blue;
+                margin-top: 1em;
+                }
+                
+				.zmax {
+				z-index: 9999999999;
+
+			}
+				
+				#settilt {
+                display: none;
+                }
+				
+				#exittilt {
+                display: none;
+                }
+				
+                #blocker {
+				/*height: 100%;
+
+				background-color: rgba(0,0,0,0.5);
+*/
+			}
+
+			#instructions {
+/*
+				width: 100%;
+				height: 100%;
+
+				display: -webkit-box;
+				display: -moz-box;
+				display: box;*/
+/*
+				-webkit-box-orient: horizontal;
+				-moz-box-orient: horizontal;
+				box-orient: horizontal;
+
+				-webkit-box-pack: center;
+				-moz-box-pack: center;
+				box-pack: center;
+
+				-webkit-box-align: center;
+				-moz-box-align: center;
+				box-align: center;
+*/
+				color: #ffffff;
+				text-align: center;
+
+				cursor: pointer;
+
+			}
